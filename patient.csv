@@ -1,0 +1,11 @@
+patient_id,patient_name,patient_gender,patient_dob,patient_city,patient_phone,room_id,doctor_id
+1001,Baburam Shrestha,M,1990,Lalitpur,9845123456,101,1
+1002,Akshey Sigdel,M,1995,Kathmandu,9855098765,102,2
+1003,Shijal Poudel,F,1987,Kathmandu,9812098745,103,2
+1004,Memosha Joshi,F,1980,Lalitpur,9861324244,104,1
+1005,Pujan Dahal,M,1976,Pokhara,9846088987,105,3
+1006,Pallavi Shrestha,F,1998,Lalitpur,9861280100,201,1
+1007,Saurav Karki,M,1975,Chitwan,9846080000,202,4
+1008,Amrit Prasad Phuyal,M,2000,Dharan,9846054587,203,5
+1009,Pradip Sapkota,M,1985,Bhaktapur,9849766987,204,4
+1010,Aayush Malla,M,1991,Dang,9846088111,205,6
