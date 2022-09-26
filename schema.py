@@ -80,10 +80,10 @@ def insert_data(engine):
 
     room_list = [
         {'room_id': 101, 'room_price_per_day': 1000},
-        {'room_id': 102, 'room_price_per_day': 1500},
+        {'room_id': 102, 'room_price_per_day': 2000},
         {'room_id': 103, 'room_price_per_day': 3000},
         {'room_id': 104, 'room_price_per_day': 4000},
-        {'room_id': 105, 'room_price_per_day': 2000}
+        {'room_id': 105, 'room_price_per_day': 5000}
     ]
 
     patient_list = [
@@ -122,13 +122,13 @@ def insert_data(engine):
          'bill_amount': 22000},
         {'bill_id': 10006, 'patient_id': 1006, 'admit_date': '2022-06-11', 'discharge_date': '2022-06-18',
          'bill_amount': 10500},
-        {'bill_id': 10007, 'patient_id': 1007, 'admit_date': '2022-06-15', 'discharge_date': '2022-06-26',
+        {'bill_id': 10007, 'patient_id': 1007, 'admit_date': '2022-06-19', 'discharge_date': '2022-06-26',
          'bill_amount': 11000},
         {'bill_id': 10008, 'patient_id': 1008, 'admit_date': '2022-06-10', 'discharge_date': '2022-06-25',
          'bill_amount': 30000},
-        {'bill_id': 10009, 'patient_id': 1009, 'admit_date': '2022-06-20', 'discharge_date': '2022-06-24',
+        {'bill_id': 10009, 'patient_id': 1009, 'admit_date': '2022-06-22', 'discharge_date': '2022-06-26',
          'bill_amount': 10000},
-        {'bill_id': 10010, 'patient_id': 1010, 'admit_date': '2022-06-20', 'discharge_date': '2022-06-29',
+        {'bill_id': 10010, 'patient_id': 1010, 'admit_date': '2022-06-26', 'discharge_date': '2022-07-03',
          'bill_amount': 18000}
     ]
 
