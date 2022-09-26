@@ -40,3 +40,19 @@ def most_patients_city(patient_df):
     ).sort_values(by='patient_id', ascending=False)
     count_df = count_df[['patient_id']]
     return count_df.rename(columns={'patient_id': 'count'}).reset_index()
+
+
+# 12  Patient and doc name belonging to same city
+def same_city(patient_df, doctor_df):
+    merge_df = patient_df.merge(doctor_df, on='doctor_id')
+    same_city_df = merge_df.query("patient_city==doctor_city")
+    return same_city_df[['patient_name', 'doctor_name', 'patient_city', 'doctor_city']]
+
+
+# merge_df=patient_df.merge(doctor_df, on='doctor_id')
+
+# #patient and doctor having same city
+# same_city_df=merge_df.query("patient_city==doctor_city")
+
+# same_city_df=same_city_df[['patient_name','doctor_name','patient_city','doctor_city']]
+# same_city_df.head()
