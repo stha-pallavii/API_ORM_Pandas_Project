@@ -75,7 +75,17 @@ def insert_data(engine):
         {'doctor_id': 4, 'doctor_name': 'Milan Poudel', 'doctor_specialization': 'endocrinology',
          'doctor_city': 'Lalitpur', 'doctor_phone': '9805800111'},
         {'doctor_id': 5, 'doctor_name': 'Ashok Baskota', 'doctor_specialization': 'orthopedics',
-         'doctor_city': 'Kathmandu', 'doctor_phone': '9801880655'}
+         'doctor_city': 'Kathmandu', 'doctor_phone': '9801880655'},
+        {'doctor_id': 6, 'doctor_name': 'Amrit Pandey', 'doctor_specialization': 'cardiology',
+         'doctor_city': 'Kathmandu', 'doctor_phone': '9876543210'},
+        {'doctor_id': 7, 'doctor_name': 'Hari Shrestha', 'doctor_specialization': 'general surgery',
+         'doctor_city': 'Pokhara', 'doctor_phone': '9876543213'},
+        {'doctor_id': 8, 'doctor_name': 'Harka Bajracharya', 'doctor_specialization': 'radiology',
+         'doctor_city': 'Bhaktapur', 'doctor_phone': '9876543216'},
+        {'doctor_id': 9, 'doctor_name': 'Januka Karki', 'doctor_specialization': 'general surgery',
+         'doctor_city': 'Dhangadi', 'doctor_phone': '9876543215'},
+        {'doctor_id': 10, 'doctor_name': 'Nabin Pant', 'doctor_specialization': 'cardiology',
+         'doctor_city': 'Chitwan', 'doctor_phone': '9876543234'}
     ]
 
     room_list = [
@@ -85,7 +95,10 @@ def insert_data(engine):
         {'room_id': 104, 'room_price_per_day': 4000},
         {'room_id': 105, 'room_price_per_day': 2000},
         {'room_id': 201, 'room_price_per_day': 1500},
-        {'room_id': 202, 'room_price_per_day': 1000}
+        {'room_id': 202, 'room_price_per_day': 1000},
+        {'room_id': 203, 'room_price_per_day': 2000},
+        {'room_id': 204, 'room_price_per_day': 2500},
+        {'room_id': 205, 'room_price_per_day': 2000},
     ]
 
     patient_list = [
@@ -99,6 +112,16 @@ def insert_data(engine):
          'patient_city': 'Kathmandu', 'patient_phone': '9861324244', 'room_id': 104, 'doctor_id': 1},
         {'patient_id': 1005, 'patient_name': 'Pujan Dahal', 'patient_gender': 'M', 'patient_dob': 1976,
          'patient_city': 'Kathmandu', 'patient_phone': '9846088987', 'room_id': 105, 'doctor_id': 3},
+        {'patient_id': 1006, 'patient_name': 'Pallavi Shrestha', 'patient_gender': 'F', 'patient_dob': 1998,
+         'patient_city': 'Lalitpur', 'patient_phone': '9861280100', 'room_id': 201, 'doctor_id': 1},
+        {'patient_id': 1007, 'patient_name': 'Saurav Karki', 'patient_gender': 'M', 'patient_dob': 1975,
+         'patient_city': 'Chitwan', 'patient_phone': '9846080000', 'room_id': 202, 'doctor_id': 4},
+        {'patient_id': 1008, 'patient_name': 'Amrit Prasad Phuyal', 'patient_gender': 'M', 'patient_dob': 2000,
+         'patient_city': 'Dharan', 'patient_phone': '9846054587', 'room_id': 203, 'doctor_id': 5},
+        {'patient_id': 1009, 'patient_name': 'Pradip Sapkota', 'patient_gender': 'M', 'patient_dob': 1985,
+         'patient_city': 'Bhaktapur', 'patient_phone': '9849766987', 'room_id': 204, 'doctor_id': 4},
+        {'patient_id': 1010, 'patient_name': 'Aayush Malla', 'patient_gender': 'M', 'patient_dob': 1991,
+         'patient_city': 'Dang', 'patient_phone': '9846088111', 'room_id': 205, 'doctor_id': 6}
     ]
 
     bill_list = [
@@ -111,7 +134,17 @@ def insert_data(engine):
         {'bill_id': 10004, 'patient_id': 1004, 'admit_date': '2022-06-05', 'discharge_date': '2022-06-15',
          'bill_amount': 40000},
         {'bill_id': 10005, 'patient_id': 1005, 'admit_date': '2022-06-10', 'discharge_date': '2022-06-21',
-         'bill_amount': 22000}
+         'bill_amount': 22000},
+        {'bill_id': 10006, 'patient_id': 1006, 'admit_date': '2022-06-11', 'discharge_date': '2022-06-18',
+         'bill_amount': 10500},
+        {'bill_id': 10007, 'patient_id': 1007, 'admit_date': '2022-06-15', 'discharge_date': '2022-06-26',
+         'bill_amount': 11000},
+        {'bill_id': 10008, 'patient_id': 1008, 'admit_date': '2022-06-10', 'discharge_date': '2022-06-25',
+         'bill_amount': 30000},
+        {'bill_id': 10009, 'patient_id': 1009, 'admit_date': '2022-06-20', 'discharge_date': '2022-06-24',
+         'bill_amount': 10000},
+        {'bill_id': 10010, 'patient_id': 1010, 'admit_date': '2022-06-20', 'discharge_date': '2022-06-29',
+         'bill_amount': 18000}
     ]
 
 #creating dictionary for all tables
