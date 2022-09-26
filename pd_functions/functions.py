@@ -49,10 +49,10 @@ def same_city(patient_df, doctor_df):
     return same_city_df[['patient_name', 'doctor_name', 'patient_city', 'doctor_city']]
 
 
-# merge_df=patient_df.merge(doctor_df, on='doctor_id')
-
-# #patient and doctor having same city
-# same_city_df=merge_df.query("patient_city==doctor_city")
-
-# same_city_df=same_city_df[['patient_name','doctor_name','patient_city','doctor_city']]
-# same_city_df.head()
+# 13 Calculate the bill amount each doc has collected for the hospital and name the highest.
+def highest_bill_doctor(patient_df, doctor_df, bill_df):
+    merge_df = patient_df.merge(doctor_df, on='doctor_id')
+    merge_df = merge_df.merge(bill_df, on='patient_id')
+    highest_bill_df = merge_df.groupby('doctor_name')[
+        'bill_amount'].sum().sort_values(ascending=False)
+    return highest_bill_df.to_frame().reset_index().rename(columns={'bill_amount': 'total_bill_collected'})
