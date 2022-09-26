@@ -8,11 +8,8 @@ def group_by_gender(df):
 
 
 # 8. List patient born after (1985)
-
-
 def after_1985(df):
     df.query('patient_dob> 1985')
-    # create new df with only patient_name and patient_dob
     return df[['patient_name', 'patient_dob']]
 
 
@@ -24,3 +21,14 @@ def most_unique_patients(patient_df, doctor_df):
     ).sort_values(by='patient_id', ascending=False)
     countdf = countdf[['patient_id']]
     return countdf.rename(columns={'patient_id': 'count'}).reset_index()
+
+
+# 10. Patient(details)  paying highest bill amount
+# also accounts for multiple visits
+def highest_bill(patient_df, bill_df):
+    merge_df = patient_df.merge(bill_df, on='patient_id')
+    # group by patient_name and sum the bill amount column and sort in descending order
+    highest_bill_df = merge_df.groupby('patient_name')[
+        'bill_amount'].sum().sort_values(ascending=False)
+    # convert series to dataframe
+    return highest_bill_df.to_frame().reset_index().rename(columns={'bill_amount': 'total_bill_amount'})
