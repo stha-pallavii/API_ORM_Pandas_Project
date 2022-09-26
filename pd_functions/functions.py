@@ -14,3 +14,13 @@ def after_1985(df):
     df.query('patient_dob> 1985')
     # create new df with only patient_name and patient_dob
     return df[['patient_name', 'patient_dob']]
+
+
+# 9. Name of doc treating most no of unique patients
+# require 2 dataframes as positional arguments
+def most_unique_patients(patient_df, doctor_df):
+    merge_df = patient_df.merge(doctor_df, on='doctor_id')
+    countdf = merge_df.groupby('doctor_name').count(
+    ).sort_values(by='patient_id', ascending=False)
+    countdf = countdf[['patient_id']]
+    return countdf.rename(columns={'patient_id': 'count'}).reset_index()
