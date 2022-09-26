@@ -32,3 +32,11 @@ def highest_bill(patient_df, bill_df):
         'bill_amount'].sum().sort_values(ascending=False)
     # convert series to dataframe
     return highest_bill_df.to_frame().reset_index().rename(columns={'bill_amount': 'total_bill_amount'})
+
+
+# 11. City  from which most patient are visiting
+def most_patients_city(patient_df):
+    count_df = patient_df.groupby('patient_city').count(
+    ).sort_values(by='patient_id', ascending=False)
+    count_df = count_df[['patient_id']]
+    return count_df.rename(columns={'patient_id': 'count'}).reset_index()
