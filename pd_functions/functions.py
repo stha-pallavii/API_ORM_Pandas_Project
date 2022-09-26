@@ -76,3 +76,9 @@ def longest_stay(patient_df, bill_df):
     patient_bill_df = patient_bill_df.sort_values(
         by='duration_of_stay', ascending=False)
     return patient_bill_df[['room_id', 'patient_name', 'duration_of_stay']]
+
+
+# 16. Capitalize all  Doc and patient name and update to database
+def capitalize_name(patient_df):
+    patient_df = patient_df['patient_name'].str.title()
+    return patient_df.to_frame().rename(columns={'patient_name': 'patient_name_capitalized'})
