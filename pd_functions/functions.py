@@ -56,3 +56,23 @@ def highest_bill_doctor(patient_df, doctor_df, bill_df):
     highest_bill_df = merge_df.groupby('doctor_name')[
         'bill_amount'].sum().sort_values(ascending=False)
     return highest_bill_df.to_frame().reset_index().rename(columns={'bill_amount': 'total_bill_collected'})
+
+
+# 14. specialization this hospital is famous for ( popularity is measured by no. of patient visiting those doctors with specialization)
+def most_popular_specialization(patient_df, doctor_df):
+    merge_df = patient_df.merge(doctor_df, on='doctor_id')
+    count_df = merge_df.groupby('doctor_specialization').count(
+    ).sort_values(by='patient_id', ascending=False)
+    count_df = count_df[['patient_id']]
+    return count_df.rename(columns={'patient_id': 'count'}).reset_index()
+
+
+# 15. Display Room no  and patient  who stayed in hospital for longer duration.
+def longest_stay(patient_df, bill_df):
+    patient_bill_df = patient_df.merge(bill_df, on='patient_id')
+    patient_bill_df['duration_of_stay'] = patient_bill_df['discharge_date'] - \
+        patient_bill_df['admit_date']
+    # patient_bill_df['duration_of_stay']=patient_bill_df['duration_of_stay'].dt.days #convert to int
+    patient_bill_df = patient_bill_df.sort_values(
+        by='duration_of_stay', ascending=False)
+    return patient_bill_df[['room_id', 'patient_name', 'duration_of_stay']]
