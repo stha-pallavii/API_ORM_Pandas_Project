@@ -127,3 +127,17 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+#hide test files
+test.py
+test.ipynb 
+test.txt
+
+
+project_env/
+
+doctor.csv
+patient.csv
+bill.csv
+room.csv
