@@ -258,6 +258,28 @@ def bill_adds_details():
         return jsonify({'message': e.args}), 400
 
 
+
+ #  Bill id 10090  contains inaccurate details and another bill id was already created with corrected details , so delete bill id 10090  from the database
+@app.route('/que6', methods=['DELETE'])
+def bill_drop_details():
+    data = request.form
+    bill_id = data['bill_id']
+
+    if not bill_id.isdigit():
+        return jsonify({'error': 'bill_id must be integer'}), 400
+
+    try:
+        bill = session.query(Bill).filter_by(bill_id=bill_id).first()
+        if bill is None:
+            return jsonify({'error': 'bill_id not found'}), 400
+        session.delete(bill)
+        session.commit()
+        return jsonify({'success': 'bill deleted successfully', 'bill_id': bill_id}), 200
+
+    except Exception as e:
+        return jsonify({'message': e.args}), 400
+
+
 if __name__ == '__main__':
 
     # be careful with below functions . comment them out when not in use
