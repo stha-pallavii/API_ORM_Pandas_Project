@@ -1,0 +1,31 @@
+patient_id,patient_name,patient_gender,patient_dob,patient_city,patient_phone,room_id,doctor_id
+1001,baburam shrestha,M,1990,Lalitpur,9845123456,101,1
+1002,akshey sigdel,M,1995,Kathmandu,9855098765,102,2
+1003,shijal poudel,F,1987,Kathmandu,9812098745,103,2
+1004,memosha joshi,F,1980,Lalitpur,9861324244,104,1
+1005,pujan dahal,M,1976,Pokhara,9846088987,105,3
+1006,pallavi shrestha,F,1998,Lalitpur,9861280100,103,1
+1007,saurav karki,M,1975,Chitwan,9846080000,103,4
+1008,amrit prasad phuyal,M,2000,Dharan,9846054587,101,5
+1009,pradip sapkota,M,1985,Bhaktapur,9849766987,105,4
+1010,aayush malla,M,1991,Dang,9846088111,101,5
+1011,kritika adhikari,F,1986,Lalitpur,9876543467,102,3
+1012,sandeep gouli,M,1975,Kathmandu,9860695979,101,5
+1013,nishma dhakal,F,1960,Kathmandu,9862546105,102,3
+1014,ram shrestha,M,1996,Lalitpur,9864396231,103,2
+1015,hari ghimire,M,1989,Pokhara,9866246357,104,4
+1016,srijana kunwar,F,1978,Lalitpur,9868096483,105,5
+1017,shyam kumar shrestha,M,1967,Chitwan,9869946609,101,1
+1018,mohan gupta,M,2002,Dharan,9871796735,102,2
+1019,santosh thapa,M,1980,Bhaktapur,9873646861,105,2
+1020,sunira marhattha,F,1999,Dang,9875496987,104,3
+1021,krishna adhikari,M,1960,Kathmandu,9875496988,101,1
+1022,prashant aryal,M,1965,Lalitpur,9875496989,102,2
+1023,anisha sapkota,F,1972,Pokhara,9875496990,103,2
+1024,riya vaidya,F,1993,Chitwan,9875496991,104,3
+1025,maya gurung,F,1984,Kathmandu,9875496992,105,4
+1026,rahul thapa,M,2010,Chitwan,9875496993,101,1
+1027,poshan rajbhandari,M,1945,Dang,9875496994,102,5
+1028,sagar gurung,M,1950,Bhaktapur,9875496995,103,5
+1029,nitesh tamrakar,M,1978,Dharan,9875496996,103,1
+1030,sandesh rai,M,1955,Kathmandu,9875496997,102,5
