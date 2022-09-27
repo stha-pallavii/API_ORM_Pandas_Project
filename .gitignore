@@ -137,7 +137,7 @@ test.txt
 
 project_env/
 
-doctor.csv
-patient.csv
-bill.csv
-room.csv
+# doctor.csv
+# patient.csv
+# bill.csv
+# room.csv

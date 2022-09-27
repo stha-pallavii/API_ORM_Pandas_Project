@@ -9,7 +9,7 @@ def group_by_gender(df):
 
 # 8. List patient born after (1985)
 def after_1985(df):
-    df.query('patient_dob> 1985')
+    df = df.query("patient_dob>1985")
     return df[['patient_name', 'patient_dob']]
 
 
@@ -72,7 +72,8 @@ def longest_stay(patient_df, bill_df):
     patient_bill_df = patient_df.merge(bill_df, on='patient_id')
     patient_bill_df['duration_of_stay'] = patient_bill_df['discharge_date'] - \
         patient_bill_df['admit_date']
-    # patient_bill_df['duration_of_stay']=patient_bill_df['duration_of_stay'].dt.days #convert to int
+    # convert to int
+    patient_bill_df['duration_of_stay'] = patient_bill_df['duration_of_stay'].dt.days
     patient_bill_df = patient_bill_df.sort_values(
         by='duration_of_stay', ascending=False)
     return patient_bill_df[['room_id', 'patient_name', 'duration_of_stay']]
