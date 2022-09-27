@@ -323,6 +323,44 @@ def patient_after_year():
         return jsonify({'message': e.args}), 400
 
 
+# 9 Name of doc treating most no of unique patient
+@app.route('/que9', methods=['GET'])
+def unique_patients():
+    conn = engine.connect()
+    try:
+        patient_df = pd.read_sql(
+            'SELECT patient_id, doctor_id FROM patient', conn)
+        doctor_df = pd.read_sql(
+            'SELECT doctor_id, doctor_name FROM doctor', conn)
+
+        result = f.most_unique_patients(patient_df, doctor_df).head(5)
+        result = result.to_json(orient='records')
+
+        return jsonify({'success': 'request sucessful', 'Top 5 Doctors and their counts': json.loads(result)}), 200
+
+    except Exception as e:
+        return jsonify({'message': e.args}), 400
+
+
+# 10. Patient(name)  paying highest bill amount
+@app.route('/que10', methods=['GET'])
+def highestbill():
+    conn = engine.connect()
+    try:
+        patient_df = pd.read_sql(
+            'SELECT patient_id, patient_name FROM patient', conn)
+        bill_df = pd.read_sql(
+            'SELECT patient_id, bill_amount FROM bill', conn)
+
+        result = f.highest_bill(patient_df, bill_df).head(5)
+        result = result.to_json(orient='records')
+
+        return jsonify({'success': 'request sucessful', 'Top 5 Patients and their bill amounts': json.loads(result)}), 200
+
+    except Exception as e:
+        return jsonify({'message': e.args}), 400
+
+
 if __name__ == '__main__':
 
     # be careful with below functions . comment them out when not in use
