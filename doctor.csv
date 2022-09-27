@@ -4,8 +4,4 @@ doctor_id,doctor_name,doctor_specialization,doctor_city,doctor_phone
 3,Basanta Panta,neurosurgery,Chitwan,9851011220
 4,Milan Poudel,endocrinology,Pokhara,9805800111
 5,Ashok Baskota,orthopedics,Kathmandu,9801880655
-6,Amrit Pandey,cardiology,Kathmandu,9876543210
-7,Hari Shrestha,general surgery,Pokhara,9876543213
-8,Harka Bajracharya,radiology,Bhaktapur,9876543216
-9,Januka Karki,general surgery,Dhangadi,9876543215
-10,Nabin Pant,cardiology,Chitwan,9876543234
+
