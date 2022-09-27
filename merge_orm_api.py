@@ -168,7 +168,29 @@ def doc_adds_details():
     except Exception as e:
         return jsonify({'message': e.args}), 400
 
+
 # 3. Existing doc moved to new city , make change to database
+@app.route('/que3', methods=['PUT'])
+def doc_change_details():
+    data = request.form
+    doctor_id = data['doctor_id']
+    doctor_city = data['doctor_city']
+
+    print('data is', data)
+
+    if not doctor_id.isdigit():
+        return jsonify({'error': 'doctor_id must be integer'}), 400
+
+    try:
+        doctor = session.query(Doctor).filter_by(doctor_id=doctor_id).first()
+        if doctor is None:
+            return jsonify({'error': 'doctor_id not found'}), 400
+        doctor.doctor_city = doctor_city
+        session.commit()
+        return jsonify({'success': 'doctor city changed successfully', 'doctor_id': doctor_id, 'doctor_city(NEW)': doctor_city}), 200
+
+    except Exception as e:
+        return jsonify({'message': e.args}), 400
 
 
 if __name__ == '__main__':
@@ -181,4 +203,4 @@ if __name__ == '__main__':
     # drop_tables() # drop all tables
     # delete_data() # delete all data from tables but keep the tables and its structure
 
-    app.run(debug=False)
+    app.run(debug=True)
