@@ -360,6 +360,89 @@ def highestbill():
     except Exception as e:
         return jsonify({'message': e.args}), 400
 
+# 11.  City  from which most patient are visiting
+
+
+@app.route('/que11', methods=['GET'])
+def patients_city():
+    conn = engine.connect()
+    try:
+        patient_df = pd.read_sql(
+            'SELECT patient_id, patient_city FROM patient', conn)
+
+        result = f.most_patients_city(patient_df).head(5)
+        result = result.to_json(orient='records')
+
+        return jsonify({'success': 'request sucessful', 'Top 5 Cities and their counts': json.loads(result)}), 200
+
+    except Exception as e:
+        return jsonify({'message': e.args}), 400
+
+
+# 12. Patient and doc name belonging to same city
+@app.route('/que12', methods=['GET'])
+def city_same():
+    conn = engine.connect()
+    try:
+        patient_df = pd.read_sql(
+            'SELECT patient_id, patient_name, patient_city,doctor_id FROM patient', conn)
+        doctor_df = pd.read_sql(
+            'SELECT doctor_id, doctor_name, doctor_city FROM doctor', conn)
+
+        result = f.same_city(patient_df, doctor_df).head(5)
+        result = result.to_json(orient='records')
+
+        return jsonify({'success': 'request sucessful', 'Top 5 Patients and Doctors and their cities': json.loads(result)}), 200
+
+    except Exception as e:
+        return jsonify({'message': e.args}), 400
+
+
+# 13. Calculate the bill amount each doc has collected for the hospital and name the highest.
+@app.route('/que13', methods=['GET'])
+def highest_billdoc():
+    conn = engine.connect()
+    try:
+        patient_df = pd.read_sql(
+            'SELECT patient_id, doctor_id FROM patient', conn)
+        doctor_df = pd.read_sql(
+            'SELECT doctor_id, doctor_name FROM doctor', conn)
+        bill_df = pd.read_sql(
+            'SELECT patient_id, bill_amount FROM bill', conn)
+
+        result = f.highest_bill_doctor(patient_df, doctor_df, bill_df).head(5)
+        result = result.to_json(orient='records')
+
+        return jsonify({'success': 'request sucessful', 'Top 5 Doctors and their bill amounts': json.loads(result)}), 200
+
+    except Exception as e:
+        return jsonify({'message': e.args}), 400
+
+
+# 14.Specialization this hospital is famous for ( popularity is measured by no. of patient visiting those doctors with specialization)
+@app.route('/que14',methods=['GET'])
+def specialization():
+    conn = engine.connect()
+    try:
+        patient_df = pd.read_sql(
+            'SELECT patient_id, doctor_id FROM patient', conn)
+        doctor_df = pd.read_sql(
+            'SELECT doctor_id, doctor_specialization FROM doctor', conn)
+
+        result = f.most_popular_specialization(patient_df, doctor_df).head(5)
+        result = result.to_json(orient='records')
+
+        return jsonify({'success': 'request sucessful', 'Top 5 Specializations and their counts': json.loads(result)}), 200
+
+    except Exception as e:
+        return jsonify({'message': e.args}), 400
+
+
+# 15. Display Room no  and patient  who stayed in hospital for longer duration in one admission
+
+
+# 16. Capitalize all  patient name and update to database
+
 
 if __name__ == '__main__':
 
