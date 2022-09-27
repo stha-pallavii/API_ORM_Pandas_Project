@@ -257,9 +257,9 @@ def bill_adds_details():
     except Exception as e:
         return jsonify({'message': e.args}), 400
 
+ # 6. Bill id 10090  contains inaccurate details and another bill id was already created with corrected details , so delete bill id 10090  from the database
 
 
- #  Bill id 10090  contains inaccurate details and another bill id was already created with corrected details , so delete bill id 10090  from the database
 @app.route('/que6', methods=['DELETE'])
 def bill_drop_details():
     data = request.form
