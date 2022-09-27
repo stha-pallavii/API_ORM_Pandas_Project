@@ -1,8 +1,8 @@
+from codecs import ignore_errors
 import pandas as pd
 from pd_functions import functions as f
 from pandas.io.json import to_json
 from flask import Flask, jsonify, request
-from exceptions import ValueNotFound, ValueDuplicate
 #from sqlalchemy import create_engine, MetaData
 #from sqlalchemy import Table, insert
 #from sqlalchemy import select, func
@@ -10,6 +10,113 @@ from exceptions import ValueNotFound, ValueDuplicate
 
 app=Flask(__name__)
 
+@app.route('/que1',methods=['POST'])
+def vip_room_added():
+    room_df = pd.read_csv('room.csv')
+    #data=request.get_json()
+    data={'room_id':109,
+          'room_price_per_day': 10000}
+    room_df=room_df.append(data, ignore_index=True)
+    try:
+        return jsonify({
+        'status': 200,
+        'message':'Success',
+        'data': json.loads(room_df.to_json(orient='records'))
+    })
+    except Exception as e:
+        return e.message
+
+@app.route('/que2',methods=['POST'])
+def doc_adds_details():
+    doctor_df = pd.read_csv('doctor.csv')
+    #data=request.get_json()
+    data={'doctor_id':19,
+          'doctor_name':'Helena Kc',
+          'doctor_specialization': 'general medicine',
+          'doctor_city': 'Kathmandu',
+          'doctor_phone': 9856245223}
+    doctor_df=doctor_df.append(data, ignore_index=True)
+    try:
+        return jsonify({
+        'status': 200,
+        'message':'Success',
+        'data': json.loads(doctor_df.to_json(orient='records'))
+    })
+    except Exception as e:
+        return e.message
+    
+@app.route('/que3/<int:id>',methods=['POST'])
+def doc_change_details(id):
+    doctor_df = pd.read_csv('doctor.csv')
+    #data=request.get_json()
+    new_city= 'Biratnagar'
+    doctor_df.set_index('doctor_id', inplace=True)
+    doctor_df.loc[id,['doctor_city']]=new_city
+    try:
+        return jsonify({
+        'status': 200,
+        'message':'Success',
+        'data': json.loads(doctor_df.to_json(orient='records'))
+    })
+    except Exception as e:
+        return e.message
+
+@app.route('/que4',methods=['POST'])
+def patient_adds_details():
+    patient_df = pd.read_csv('patient.csv')
+    #data=request.get_json()
+    data={'patient_id':1091,
+          'patient_name':'Harry Kc',
+          'patient_gender': 'M',
+          'patient_dob': 1999,
+          'patient_city': 'Kathmandu',
+          'patient_phone': 9856565223,
+          'room_id':105,
+          'doctor_id':19}
+    patient_df=patient_df.append(data, ignore_index=True)
+    try:
+        return jsonify({
+        'status': 200,
+        'message':'Success',
+        'data': json.loads(patient_df.to_json(orient='records'))
+    })
+    except Exception as e:
+        return e.message
+
+@app.route('/que5',methods=['POST'])
+def bill_adds_details():
+    bill_df = pd.read_csv('bill.csv')
+    #data=request.get_json()
+    data={'bill_id':10090,
+          'patient_id':1091,
+          'admit_date': 2022-11-5,
+          'discharge_date': 2022-11-9,
+          'bill_amount': 3000}
+    bill_df=bill_df.append(data, ignore_index=True)
+    try:
+        return jsonify({
+        'status': 200,
+        'message':'Success',
+        'data': json.loads(bill_df.to_json(orient='records'))
+    })
+    except Exception as e:
+        return e.message
+    
+@app.route('/que6/<int:id>',methods=['POST'])
+def bill_drop_details(id):
+    bill_df = pd.read_csv('bill.csv')
+    #data=request.get_json()
+    bill_df=bill_df.set_index('bill_id')
+    bill_df=bill_df.drop(id)
+    try:
+        return jsonify({
+        'status': 200,
+        'message':'Success',
+        'data': json.loads(bill_df.to_json(orient='records'))
+    })
+    except Exception as e:
+        return e.message
+    
 @app.route('/que7',methods=['GET'])
 def male_female_patients():
     patient_df = pd.read_csv('patient.csv')
@@ -151,7 +258,7 @@ def specialization():
 @app.route('/que15',methods=['GET'])
 def longest_stay():
     patient_df = pd.read_csv('patient.csv')
-    bill_df = pd.read_csv('bill.csv')
+    bill_df = pd.read_csv('bill.csv',parse_dates=['admit_date','discharge_date'])
     pandas_query=f.longest_stay(patient_df,bill_df)
     try:
         return jsonify({
