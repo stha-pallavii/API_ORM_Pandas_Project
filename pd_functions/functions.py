@@ -1,5 +1,7 @@
 # 7. Find whether there are more  male/female patients .
 # takes dataframe as argument  and return  a new dataframe with counts
+
+
 def group_by_gender(df):
     count_df = df.groupby('patient_gender').count(
     ).sort_values(by='patient_id', ascending=False)
@@ -8,8 +10,8 @@ def group_by_gender(df):
 
 
 # 8. List patient born after (1985)
-def after_1985(df):
-    df = df.query("patient_dob>1985")
+def after_year(df, year1):
+    df = df[df['patient_dob'] > year1].sort_values(by='patient_dob')
     return df[['patient_name', 'patient_dob']]
 
 

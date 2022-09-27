@@ -279,6 +279,49 @@ def bill_drop_details():
     except Exception as e:
         return jsonify({'message': e.args}), 400
 
+##################################### use pd_functons package  ########################################
+
+
+# 7. Find whether there are more male/female patients
+@app.route('/que7', methods=['GET'])
+def male_female_patients():
+    conn = engine.connect()
+    try:
+        df = pd.read_sql(
+            'SELECT patient_id, patient_gender FROM patient', conn)
+
+        result = f.group_by_gender(df)
+        result = result.to_json(orient='records')
+
+        return jsonify({'success': 'request sucessful', 'result': json.loads(result)}), 200
+
+    except Exception as e:
+        return jsonify({'message': e.args}), 400
+
+
+# 8. List patient born after ( given year   )
+@app.route('/que8', methods=['GET'])
+def patient_after_year():
+
+    data = request.form
+    try:
+        year = int(data['year'])
+    except Exception as e:
+        return jsonify({'message': e.args}), 400
+
+    conn = engine.connect()
+    try:
+        df = pd.read_sql(
+            'SELECT  patient_name, patient_dob FROM patient', conn)
+
+        result = f.after_year(df, year)
+        result = result.to_json(orient='records')
+
+        return jsonify({'success': 'request sucessful', 'result': json.loads(result)}), 200
+
+    except Exception as e:
+        return jsonify({'message': e.args}), 400
+
 
 if __name__ == '__main__':
 
