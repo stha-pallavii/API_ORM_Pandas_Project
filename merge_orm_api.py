@@ -78,6 +78,8 @@ class Bill(Base):
     patient_id = Column(Integer, ForeignKey(
         'patient.patient_id'), nullable=False)
 
+    # patient = relationship("Patient", back_populates="bill")
+
     def __repr__(self):
         return f"Bill(bill_id={self.bill_id}, bill_date={self.bill_date}, bill_amount={self.bill_amount}, patient_id={self.patient_id})"
 
@@ -86,8 +88,9 @@ class Bill(Base):
 def create_tables():
     Base.metadata.create_all(engine)
 
-
 # function to drop all of the above tables in the metadata
+
+
 def drop_tables():
     Base.metadata.drop_all(engine)
 
@@ -101,7 +104,10 @@ def delete_data():
     session.commit()
 
 
+# emply all rows from all tables delete in roder to avoid foreign key constraint error
+
 # function to insert(csv) data into the tables
+
 def insert_data():
     patient_df = pd.read_csv('patient.csv')
     doctor_df = pd.read_csv('doctor.csv')
@@ -118,7 +124,6 @@ def insert_data():
 
 
 # ############################# API    ############################################
-
 # 1. A new room was recently added to the hospital
 @app.route('/que1', methods=['POST'])
 def vip_room_added():
@@ -139,8 +144,9 @@ def vip_room_added():
     except Exception as e:
         return jsonify({'message': e.args}), 400
 
-
 # 2. A new doctor joined adds his details
+
+
 @app.route('/que2', methods=['POST'])
 def doc_adds_details():
     data = request.form
@@ -186,9 +192,9 @@ def doc_change_details():
     except Exception as e:
         return jsonify({'message': e.args}), 400
 
-        
-
 # 4. New patient  visited add him/her
+
+
 @app.route('/que4', methods=['POST'])
 def patient_adds_details():
     data = request.form
@@ -213,17 +219,53 @@ def patient_adds_details():
     except Exception as e:
         return jsonify({'message': e.args}), 400
 
+
 # 5. New bills created add it to database
+@app.route('/que5', methods=['POST'])
+def bill_adds_details():
+    data = request.form
+    bill_id = data['bill_id']
+    patient_id = data['patient_id']
+    admit_date = data['admit_date']
+    discharge_date = data['discharge_date']
+
+    try:
+        admit_date = datetime.strptime(admit_date, '%Y-%m-%d')
+        discharge_date = datetime.strptime(discharge_date, '%Y-%m-%d')
+    except Exception as e:
+        return jsonify({'message': e.args}), 400
+
+    if not bill_id.isdigit() or not patient_id.isdigit():
+        return jsonify({'error': 'bill_id and patient_id must be integer'}), 400
+
+    # calculate bill amount using room price and number of days
+    patient = session.query(Patient).filter_by(patient_id=patient_id).first()
+    room_id = patient.room_id
+    room = session.query(Room).filter_by(room_id=room_id).first()
+    room_price_per_day = room.room_price_per_day
+    Duration_of_stay = (discharge_date - admit_date).days
+    bill_amount = room_price_per_day * Duration_of_stay
+
+    data = {'bill_id': bill_id, 'patient_id': patient_id, 'admit_date': admit_date,
+            'discharge_date': discharge_date, 'bill_amount': bill_amount}
+    df = pd.DataFrame(data, index=[0])
+
+    try:
+        df.to_sql('bill', con=engine, if_exists='append', index=False)
+        return jsonify({'success': 'bill added successfully', 'bill_id': bill_id, 'patient_id': patient_id, 'admit_date': admit_date, 'discharge_date': discharge_date, 'bill_amount': bill_amount, "Duration_of_stay": Duration_of_stay, "Room_price_per_day": room_price_per_day}), 200
+
+    except Exception as e:
+        return jsonify({'message': e.args}), 400
 
 
 if __name__ == '__main__':
 
     # be careful with below functions . comment them out when not in use
 
-    # create_tables()
-    # insert_data()  # please comment out this function after first use
+    create_tables()
+    # insert_data() # please comment out this function after first use
 
     # drop_tables() # drop all tables
-    # delete_data()  # delete all data from tables but keep the tables and its structure
+    # delete_data() # delete all data from tables but keep the tables and its structure
 
     app.run(debug=True)
