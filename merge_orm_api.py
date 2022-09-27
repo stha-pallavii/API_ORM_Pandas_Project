@@ -420,7 +420,7 @@ def highest_billdoc():
 
 
 # 14.Specialization this hospital is famous for ( popularity is measured by no. of patient visiting those doctors with specialization)
-@app.route('/que14',methods=['GET'])
+@app.route('/que14', methods=['GET'])
 def specialization():
     conn = engine.connect()
     try:
@@ -439,9 +439,42 @@ def specialization():
 
 
 # 15. Display Room no  and patient  who stayed in hospital for longer duration in one admission
+@app.route('/que15', methods=['GET'])
+def longest_stay():
+    conn = engine.connect()
+    try:
+        patient_df = pd.read_sql(
+            'SELECT patient_id, patient_name, room_id FROM patient', conn)
+        admission_df = pd.read_sql(
+            'SELECT patient_id, admit_date, discharge_date FROM bill', conn)
+
+        result = f.longest_stay(patient_df, admission_df).head(5)
+        result = result.to_json(orient='records')
+
+        return jsonify({'success': 'request sucessful', 'Top 5 Patients and their durations': json.loads(result)}), 200
+
+    except Exception as e:
+        return jsonify({'message': e.args}), 400
 
 
-# 16. Capitalize all  patient name and update to database
+# 16. Capitalize all  patient name and commit  to database
+@app.route('/que16', methods=['PUT'])
+def capitalize():
+    conn = engine.connect()
+    try:
+        patient_df = pd.read_sql(
+            'SELECT patient_id, patient_name FROM patient', conn)
+        result = f.capitalize_name(patient_df)
+        result_json = result.to_json(orient='records')
+        patient = session.query(Patient).all()
+        for i in range(len(patient)):
+            patient[i].patient_name = result['patient_name_capitalized'][i]
+        session.commit()
+
+        return jsonify({'success': 'request sucessful', 'message': 'patient names capitalized', 'Capatilized names': json.loads(result_json)}), 200
+
+    except Exception as e:
+        return jsonify({'message': e.args}), 400
 
 
 if __name__ == '__main__':
