@@ -124,16 +124,16 @@ def insert_data():
 
 
 # ############################# API    ############################################
-
+# 1. A new room was recently added to the hospital
 @app.route('/que1', methods=['POST'])
 def vip_room_added():
-    data = request.form
+    data = request.form  # get data from request body
     room_id = data['room_id']
     room_price_per_day = data['room_price_per_day']
 
     df = pd.DataFrame(data, index=[0])  # index=[0] to make it one row
 
-    # raise error if room_id  and room_price_per_day are not integer
+    # raise error if room_id  and room_price_per_day are  integer or not
     if not room_id.isdigit() or not room_price_per_day.isdigit():
         return jsonify({'error': 'room_id and room_price_per_day must be integer'}), 400
 
@@ -143,6 +143,32 @@ def vip_room_added():
 
     except Exception as e:
         return jsonify({'message': e.args}), 400
+
+# 2. A new doctor joined adds his details
+
+
+@app.route('/que2', methods=['POST'])
+def doc_adds_details():
+    data = request.form
+    doctor_id = data['doctor_id']
+    doctor_name = data['doctor_name']
+    doctor_specialization = data['doctor_specialization']
+    doctor_city = data['doctor_city']
+    doctor_phone = data['doctor_phone']
+
+    df = pd.DataFrame(data, index=[0])
+
+    if not doctor_id.isdigit() or not doctor_phone.isdigit():
+        return jsonify({'error': 'doctor_id and doctor_phone must be integer'}), 400
+
+    try:
+        df.to_sql('doctor', con=engine, if_exists='append', index=False)
+        return jsonify({'success': 'doctor added successfully', 'doctor_id': doctor_id, 'doctor_name': doctor_name, 'doctor_specialization': doctor_specialization, 'doctor_city': doctor_city, 'doctor_phone': doctor_phone}), 200
+
+    except Exception as e:
+        return jsonify({'message': e.args}), 400
+
+# 3. Existing doc moved to new city , make change to database
 
 
 if __name__ == '__main__':
