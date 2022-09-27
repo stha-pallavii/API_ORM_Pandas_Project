@@ -139,6 +139,7 @@ def vip_room_added():
 
     try:
         df.to_sql('room', con=engine, if_exists='append', index=False)
+        session.commit()
         return jsonify({'success': 'room added successfully', 'room_id': room_id, 'room_price_per_day': room_price_per_day}), 200
 
     except Exception as e:
@@ -163,6 +164,7 @@ def doc_adds_details():
 
     try:
         df.to_sql('doctor', con=engine, if_exists='append', index=False)
+        session.commit()
         return jsonify({'success': 'doctor added successfully', 'doctor_id': doctor_id, 'doctor_name': doctor_name, 'doctor_specialization': doctor_specialization, 'doctor_city': doctor_city, 'doctor_phone': doctor_phone}), 200
 
     except Exception as e:
@@ -214,6 +216,7 @@ def patient_adds_details():
 
     try:
         df.to_sql('patient', con=engine, if_exists='append', index=False)
+        session.commit()
         return jsonify({'success': 'patient added successfully', 'patient_id': patient_id, 'patient_name': patient_name, 'patient_gender': patient_gender, 'patient_dob': patient_dob, 'patient_city': patient_city, 'patient_phone': patient_phone, 'room_id': room_id, 'doctor_id': doctor_id}), 200
 
     except Exception as e:
@@ -252,6 +255,7 @@ def bill_adds_details():
 
     try:
         df.to_sql('bill', con=engine, if_exists='append', index=False)
+        session.commit()
         return jsonify({'success': 'bill added successfully', 'bill_id': bill_id, 'patient_id': patient_id, 'admit_date': admit_date, 'discharge_date': discharge_date, 'bill_amount': bill_amount, "Duration_of_stay": Duration_of_stay, "Room_price_per_day": room_price_per_day}), 200
 
     except Exception as e:
@@ -481,10 +485,10 @@ if __name__ == '__main__':
 
     # be careful with below functions . comment them out when not in use
 
-    create_tables()
-    # insert_data() # please comment out this function after first use
+    # create_tables()
+    # insert_data()  # please comment out this function after first use
 
-    # drop_tables() # drop all tables
-    # delete_data() # delete all data from tables but keep the tables and its structure
+    # drop_tables()  # drop all tables
+    # delete_data()  # delete all data from tables but keep the tables and its structure
 
     app.run(debug=True)
