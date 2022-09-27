@@ -127,30 +127,23 @@ def insert_data():
 
 @app.route('/que1', methods=['POST'])
 def vip_room_added():
-
     data = request.form
     room_id = data['room_id']
     room_price_per_day = data['room_price_per_day']
+
+    df = pd.DataFrame(data, index=[0])  # index=[0] to make it one row
 
     # raise error if room_id  and room_price_per_day are not integer
     if not room_id.isdigit() or not room_price_per_day.isdigit():
         return jsonify({'error': 'room_id and room_price_per_day must be integer'}), 400
 
-    # created room object to insert data into room table
-    room = Room(room_id=room_id, room_price_per_day=room_price_per_day)
-
-    # raise eeero if room_id already exist
-    if session.query(Room).filter_by(room_id=room_id).first():
-        return jsonify({'error': 'room_id already exist'}), 400
-
     try:
-        session.add(room)
-        session.commit()
+        df.to_sql('room', con=engine, if_exists='append', index=False)
         return jsonify({'success': 'room added successfully', 'room_id': room_id, 'room_price_per_day': room_price_per_day}), 200
 
     except Exception as e:
-        return jsonify({'error': str(e)}), 400  
-        
+        return jsonify({'message': e.args}), 400
+
 
 if __name__ == '__main__':
 
