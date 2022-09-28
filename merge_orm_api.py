@@ -123,7 +123,7 @@ def insert_data():
 
 # ############################# API    ############################################
 # 1. A new room was recently added to the hospital
-@app.route('/que1', methods=['POST'])
+@app.route('/add_new_room', methods=['POST'])
 def vip_room_added():
     data = request.form  # get data from request body
     room_id = data['room_id']
@@ -151,7 +151,7 @@ def vip_room_added():
 # 2. A new doctor joined adds his details
 
 
-@app.route('/que2', methods=['POST'])
+@app.route('/add_new_doc', methods=['POST'])
 def doc_adds_details():
     data = request.form
     doctor_id = data['doctor_id']
@@ -175,7 +175,7 @@ def doc_adds_details():
 
 
 # 3. Existing doc moved to new city , make change to database
-@app.route('/que3', methods=['PUT'])
+@app.route('/update_city', methods=['PUT'])
 def doc_change_details():
     data = request.form
     doctor_id = data['doctor_id']
@@ -198,7 +198,7 @@ def doc_change_details():
 # 4. New patient  visited add him/her
 
 
-@app.route('/que4', methods=['POST'])
+@app.route('/new_patient', methods=['POST'])
 def patient_adds_details():
     data = request.form
     patient_id = data['patient_id']
@@ -225,7 +225,7 @@ def patient_adds_details():
 
 
 # 5. New bills created add it to database
-@app.route('/que5', methods=['POST'])
+@app.route('/new_bill', methods=['POST'])
 def bill_adds_details():
     data = request.form
     bill_id = data['bill_id']
@@ -267,7 +267,7 @@ def bill_adds_details():
  # 6. Bill id 10090  contains inaccurate details and another bill id was already created with corrected details , so delete bill id 10090  from the database
 
 
-@app.route('/que6', methods=['DELETE'])
+@app.route('/delete_bill', methods=['DELETE'])
 def bill_drop_details():
     data = request.form
     bill_id = data['bill_id']
@@ -289,7 +289,7 @@ def bill_drop_details():
 
 ##################################### use pd_functons package  ########################################
 # 7. Find whether there are more male/female patients
-@app.route('/que7', methods=['GET'])
+@app.route('/gender_count', methods=['GET'])
 def male_female_patients():
     conn = engine.connect()
     try:
@@ -306,7 +306,7 @@ def male_female_patients():
 
 
 # 8. List patient born after ( given year   )
-@app.route('/que8', methods=['GET'])
+@app.route('/patient_born_after', methods=['GET'])
 def patient_after_year():
 
     data = request.form
@@ -330,7 +330,7 @@ def patient_after_year():
 
 
 # 9 Name of doc treating most no of unique patient
-@app.route('/que9', methods=['GET'])
+@app.route('/doc_treating_unique_patient', methods=['GET'])
 def unique_patients():
     conn = engine.connect()
     try:
@@ -349,7 +349,7 @@ def unique_patients():
 
 
 # 10. Patient(name)  paying highest bill amount
-@app.route('/que10', methods=['GET'])
+@app.route('/highest_bill_patient', methods=['GET'])
 def highestbill():
     conn = engine.connect()
     try:
@@ -366,10 +366,9 @@ def highestbill():
     except Exception as e:
         return jsonify({'message': e.args}), 400
 
+
 # 11.  City  from which most patient are visiting
-
-
-@app.route('/que11', methods=['GET'])
+@app.route('/most_patient_city', methods=['GET'])
 def patients_city():
     conn = engine.connect()
     try:
@@ -386,7 +385,7 @@ def patients_city():
 
 
 # 12. Patient and doc name belonging to same city
-@app.route('/que12', methods=['GET'])
+@app.route('/same_city_doc_patient', methods=['GET'])
 def city_same():
     conn = engine.connect()
     try:
@@ -405,7 +404,7 @@ def city_same():
 
 
 # 13. Calculate the bill amount each doc has collected for the hospital and name the highest.
-@app.route('/que13', methods=['GET'])
+@app.route('/highest_bill_collection_doc', methods=['GET'])
 def highest_billdoc():
     conn = engine.connect()
     try:
@@ -426,7 +425,7 @@ def highest_billdoc():
 
 
 # 14.Specialization this hospital is famous for ( popularity is measured by no. of patient visiting those doctors with specialization)
-@app.route('/que14', methods=['GET'])
+@app.route('/specialization_count', methods=['GET'])
 def specialization():
     conn = engine.connect()
     try:
@@ -445,7 +444,7 @@ def specialization():
 
 
 # 15. Display Room no  and patient  who stayed in hospital for longer duration in one admission
-@app.route('/que15', methods=['GET'])
+@app.route('/longest_stay_patient', methods=['GET'])
 def longest_stay():
     conn = engine.connect()
     try:
@@ -464,7 +463,7 @@ def longest_stay():
 
 
 # 16. Capitalize all  patient name and commit  to database
-@app.route('/que16', methods=['PUT'])
+@app.route('/capatilize_patient_name', methods=['PUT'])
 def capitalize():
     conn = engine.connect()
     try:
