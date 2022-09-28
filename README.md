@@ -9,7 +9,7 @@ This project includes topic related to API, ORM and Pandas.
 
 Above mentioned team members contributed and completed the project during thier traineeship at Fusemachines Nepal.
 
----
+
 ## Create and activate a virtual environment:
 ---
 
@@ -19,7 +19,15 @@ Above mentioned team members contributed and completed the project during thier 
 
 Use `pip install -r requirements.txt` to install the required packages.
 
+
+## Procedure to Run
 ---
+1. Create a schema named "hospital"  in your  mysql database 
+2. Fill creadential in `create_engine('[DB_TYPE]+[DB_CONNECTOR]://[USERNAME]:[PASSWORD]@[HOST]:[PORT]/[DB_NAME]') `
+3. Run `merge_orm_api.py`   with  function  create_table() uncommented 
+4. Then uncomment  `insert_data()`  to insert the datas, once confirmed comment it again
+5. Obtain poatman json colection after importing url from  `postman_json_url` 
+
 ## `pd_fuctions` package and their methods
 ---
 

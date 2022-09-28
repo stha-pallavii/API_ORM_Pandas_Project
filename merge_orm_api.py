@@ -33,7 +33,6 @@ class Doctor(Base):
     doctor_specialization = Column(String(30), nullable=False)
     doctor_city = Column(String(20), nullable=False)
     doctor_phone = Column(String(15), nullable=False, unique=True)
-
     patient = relationship("Patient", back_populates="doctor")
 
     def __repr__(self):
@@ -119,7 +118,6 @@ def insert_data():
     doctor_df.to_sql('doctor', con=engine, if_exists='append', index=False)
     patient_df.to_sql('patient', con=engine, if_exists='append', index=False)
     bill_df.to_sql('bill', con=engine, if_exists='append', index=False)
-
     session.commit()
 
 
@@ -130,6 +128,11 @@ def vip_room_added():
     data = request.form  # get data from request body
     room_id = data['room_id']
     room_price_per_day = data['room_price_per_day']
+
+    # room_id = request.args['room_id']
+    # room_price_per_day = request.args['room_price_per_day']
+
+    # data = {'room_id': room_id, 'room_price_per_day': room_price_per_day}
 
     df = pd.DataFrame(data, index=[0])  # index=[0] to make it one row
 
@@ -177,8 +180,6 @@ def doc_change_details():
     data = request.form
     doctor_id = data['doctor_id']
     doctor_city = data['doctor_city']
-
-    print('data is', data)
 
     if not doctor_id.isdigit():
         return jsonify({'error': 'doctor_id must be integer'}), 400
@@ -243,6 +244,8 @@ def bill_adds_details():
 
     # calculate bill amount using room price and number of days
     patient = session.query(Patient).filter_by(patient_id=patient_id).first()
+    if patient is None:
+        return jsonify({'error': 'patient_id not found'}), 400
     room_id = patient.room_id
     room = session.query(Room).filter_by(room_id=room_id).first()
     room_price_per_day = room.room_price_per_day
@@ -270,7 +273,7 @@ def bill_drop_details():
     bill_id = data['bill_id']
 
     if not bill_id.isdigit():
-        return jsonify({'error': 'bill_id must be integer'}), 400
+        return jsonify({'error': 'Last warning!!! bill_id must be integer'}), 400
 
     try:
         bill = session.query(Bill).filter_by(bill_id=bill_id).first()
@@ -283,9 +286,8 @@ def bill_drop_details():
     except Exception as e:
         return jsonify({'message': e.args}), 400
 
+
 ##################################### use pd_functons package  ########################################
-
-
 # 7. Find whether there are more male/female patients
 @app.route('/que7', methods=['GET'])
 def male_female_patients():
@@ -321,7 +323,7 @@ def patient_after_year():
         result = f.after_year(df, year)
         result = result.to_json(orient='records')
 
-        return jsonify({'success': 'request sucessful', 'result': json.loads(result)}), 200
+        return jsonify({'success': 'request sucessful', 'Result': json.loads(result)}), 200
 
     except Exception as e:
         return jsonify({'message': e.args}), 400
